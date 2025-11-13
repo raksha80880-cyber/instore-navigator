@@ -1,88 +1,35 @@
-<div class="floor-selector">
-  <label for="itemSelect">Choose Item:</label>
-  <select id="itemSelect">
-    <option disabled selected>Select an Item</option>
-    <optgroup label="Ground Floor">
-      <option value="Apples">Apples (₹120/kg)</option>
-      <option value="Oranges">Oranges (₹90/kg)</option>
-    </optgroup>
-    <optgroup label="First Floor">
-      <option value="Jeans">Levi’s Jeans (₹2,499)</option>
-      <option value="Shoes">Nike Shoes (₹4,299)</option>
-    </optgroup>
-    <optgroup label="Second Floor">
-      <option value="TV">Samsung Smart TV (₹45,999)</option>
-      <option value="Fridge">LG Refrigerator (₹32,499)</option>
-    </optgroup>
-  </select>
-  <button id="navigateBtn" style="margin-left:10px; padding:0.5rem 1rem; background:#7b1fa2; color:white; border:none; border-radius:8px;">Start Navigation</button>
-</div>
+/* Custom global styles to complement Tailwind CSS */
 
-<!-- Modal -->
-<div class="modal" id="infoModal">
-  <div class="modal-content">
-    <h2>Destination Reached 🎯</h2>
-    <p id="modalText">You have arrived at your selected item!</p>
-    <button onclick="closeModal()">Close</button>
-  </div>
-</div>
-
-<footer>© 2025 Smart Mall Navigator | Voice + Route + Multi-Floor Navigation</footer>
-
-<script>
-const shopper = document.getElementById('shopper');
-const path = document.getElementById('path');
-const modal = document.getElementById('infoModal');
-const voiceToggle = document.getElementById('voiceToggle');
-
-let voiceEnabled = false;
-voiceToggle.addEventListener('change', () => {
-  voiceEnabled = voiceToggle.checked;
-  speak(voiceEnabled ? "Voice navigation activated." : "Voice navigation off.");
-});
-
-function speak(msg) {
-  if ('speechSynthesis' in window) {
-    const utter = new SpeechSynthesisUtterance(msg);
-    utter.lang = "en-IN";
-    speechSynthesis.speak(utter);
-  }
+body {
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-function openModal() {
-  modal.classList.add("is-open");
-  document.body.classList.add("modal-open");
-}
-function closeModal() {
-  modal.classList.remove("is-open");
-  document.body.classList.remove("modal-open");
+/* Custom scrollbar for a more modern look */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
 }
 
-document.getElementById("navigateBtn").addEventListener("click", () => {
-  const item = document.getElementById("itemSelect").value;
-  const floor = document.getElementById("floor").value;
-  if (!item) return alert("Please select an item!");
+::-webkit-scrollbar-track {
+  background: transparent;
+}
 
-  speak(Navigating to ${item} on ${floor}. Please follow the route.);
+::-webkit-scrollbar-thumb {
+  background-color: rgba(156, 163, 175, 0.5); /* gray-400 with 50% opacity */
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
 
-  // Reset
-  path.style.width = "0";
-  shopper.style.left = "10%";
-  shopper.style.top = "50%";
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(107, 114, 128, 0.7); /* gray-500 with 70% opacity */
+}
 
-  // Animate path
-  setTimeout(() => {
-    path.style.width = "70%";
-    shopper.style.left = "80%";
-    shopper.style.top = "50%";
-  }, 500);
+/* For dark mode */
+.dark ::-webkit-scrollbar-thumb {
+  background-color: rgba(107, 114, 128, 0.5); /* gray-500 with 50% opacity */
+}
 
-  // End navigation
-  setTimeout(() => {
-    speak(You have reached the ${item} section on the ${floor}.);
-    openModal();
-  }, 3000);
-});
-</script>
-</body>
-</html>
+.dark ::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(156, 163, 175, 0.7); /* gray-400 with 70% opacity */
+}

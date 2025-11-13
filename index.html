@@ -1,68 +1,62 @@
-<!-- Modal -->
-<div class="modal" id="infoModal">
-  <div class="modal-content">
-    <h2>Destination Reached 🎯</h2>
-    <p id="modalText">You have arrived at your selected item!</p>
-    <button onclick="closeModal()">Close</button>
-  </div>
-</div>
-
-<footer>© 2025 Smart Mall Navigator | Voice + Route + Multi-Floor Navigation</footer>
-
-<script>
-const shopper = document.getElementById('shopper');
-const path = document.getElementById('path');
-const modal = document.getElementById('infoModal');
-const voiceToggle = document.getElementById('voiceToggle');
-
-let voiceEnabled = false;
-voiceToggle.addEventListener('change', () => {
-  voiceEnabled = voiceToggle.checked;
-  speak(voiceEnabled ? "Voice navigation activated." : "Voice navigation off.");
-});
-
-function speak(msg) {
-  if ('speechSynthesis' in window) {
-    const utter = new SpeechSynthesisUtterance(msg);
-    utter.lang = "en-IN";
-    speechSynthesis.speak(utter);
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Instore Navigator Pro</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              primary: {"50":"#eff6ff","100":"#dbeafe","200":"#bfdbfe","300":"#93c5fd","400":"#60a5fa","500":"#3b82f6","600":"#2563eb","700":"#1d4ed8","800":"#1e40af","900":"#1e3a8a","950":"#172554"}
+            },
+            keyframes: {
+              'fade-in': {
+                '0%': { opacity: '0' },
+                '100%': { opacity: '1' },
+              },
+              'slide-in-up': {
+                '0%': { transform: 'translateY(100%)', opacity: '0' },
+                '100%': { transform: 'translateY(0)', opacity: '1' },
+              },
+               'pulse-dot': {
+                '0%, 100%': { transform: 'scale(1)', opacity: '1' },
+                '50%': { transform: 'scale(2)', opacity: '0.5' },
+              },
+            },
+            animation: {
+              'fade-in': 'fade-in 0.5s ease-out',
+              'slide-in-up': 'slide-in-up 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+              'pulse-dot': 'pulse-dot 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            }
+          }
+        }
+      }
+    </script>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/lucide-react@0.292.0/dist/lucide-react.min.js"></script>
+    <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
+  <script type="importmap">
+{
+  "imports": {
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.29.0",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "framer-motion": "https://aistudiocdn.com/framer-motion@^12.23.24",
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.553.0"
   }
 }
-
-function openModal() {
-  modal.classList.add("is-open");
-  document.body.classList.add("modal-open");
-}
-function closeModal() {
-  modal.classList.remove("is-open");
-  document.body.classList.remove("modal-open");
-}
-
-document.getElementById("navigateBtn").addEventListener("click", () => {
-  const item = document.getElementById("itemSelect").value;
-  const floor = document.getElementById("floor").value;
-  if (!item) return alert("Please select an item!");
-
-  speak(Navigating to ${item} on ${floor}. Please follow the route.);
-
-  // Reset
-  path.style.width = "0";
-  shopper.style.left = "10%";
-  shopper.style.top = "50%";
-
-  // Animate path
-  setTimeout(() => {
-    path.style.width = "70%";
-    shopper.style.left = "80%";
-    shopper.style.top = "50%";
-  }, 500);
-
-  // End navigation
-  setTimeout(() => {
-    speak(You have reached the ${item} section on the ${floor}.);
-    openModal();
-  }, 3000);
-});
 </script>
-</body>
+</head>
+  <body class="bg-gray-100 dark:bg-gray-900">
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+    <script src="script.js" defer></script>
+  </body>
 </html>

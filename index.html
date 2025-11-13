@@ -1,75 +1,126 @@
 <!DOCTYPE html>
-<select id="newFloor">
-<option value="ground">Ground</option>
-<option value="first">First</option>
-<option value="second">Second</option>
-</select>
-<button id="addItemBtn">Add Item</button>
-</section>
-</aside>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Smart Mall Navigator</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <h1 id="appTitle">Smart Mall Navigator</h1>
+    <div class="controls">
+      <label class="lang">
+        <select id="langSelect" aria-label="Language select">
+          <option value="en">English</option>
+          <option value="kn">ಕನ್ನಡ</option>
+        </select>
+      </label>
+      <label class="toggle">
+        <input type="checkbox" id="shopkeeperMode"> Shopkeeper Mode
+      </label>
+      <label class="toggle">
+        <input type="checkbox" id="voiceToggle"> Voice
+      </label>
+    </div>
+  </header>
 
+  <main class="container">
+    <aside class="sidebar">
+      <section class="floor-panel">
+        <h2 id="floorTitle">Select Floor</h2>
+        <select id="floorSelect">
+          <option value="ground">Ground Floor</option>
+          <option value="first">First Floor</option>
+          <option value="second">Second Floor</option>
+        </select>
+      </section>
 
-<section class="map-area">
-<div class="map-top">
-<div class="map-info">
-<div id="liveLocation">Live: Ground (x:10,y:50)</div>
-<div id="destinationInfo">Destination: —</div>
-</div>
-<div class="map-actions">
-<button id="multiSelectBtn">Multi-select</button>
-<button id="showFacilities">Facilities</button>
-</div>
-</div>
+      <section class="filters">
+        <input id="search" placeholder="Search items" />
+        <button id="clearSearch">Clear</button>
+      </section>
 
+      <section class="item-list">
+        <h3 id="itemsHeading">Items</h3>
+        <div id="itemsContainer"></div>
+      </section>
 
-<div id="mallMap" class="mall-map">
-<!-- Floors (only one visible at a time) -->
-<div class="floor floor-ground" data-floor="ground">
-<div class="node" data-id="Apples" style="left:10%; top:70%">Apples<br><small>₹120/kg</small></div>
-<div class="node" data-id="Oranges" style="left:20%; top:60%">Oranges<br><small>₹90/kg</small></div>
-<div class="facility" data-type="washroom" style="left:5%; top:10%">Washroom</div>
-<div class="facility" data-type="office" style="left:90%; top:5%">Mall Office</div>
-</div>
+      <section class="cart">
+        <h3 id="cartHeading">Cart</h3>
+        <div id="cartItems"></div>
+        <div class="cart-summary">
+          <div id="totalLabel">Total: ₹0</div>
+          <button id="payBtn">Pay</button>
+        </div>
+      </section>
 
+      <section class="shopkeeper-panel hidden" id="shopkeeperPanel">
+        <h3>Shopkeeper</h3>
+        <input id="newName" placeholder="Name" />
+        <input id="newBrand" placeholder="Brand" />
+        <input id="newRate" placeholder="Rate" type="number" />
+        <input id="newDiscount" placeholder="Discount (%)" type="number" />
+        <select id="newFloor">
+          <option value="ground">Ground</option>
+          <option value="first">First</option>
+          <option value="second">Second</option>
+        </select>
+        <button id="addItemBtn">Add Item</button>
+      </section>
+    </aside>
 
-<div class="floor floor-first hidden" data-floor="first">
-<div class="node" data-id="Jeans" style="left:50%; top:40%">Levi's Jeans<br><small>₹2,499</small></div>
-<div class="node" data-id="Shoes" style="left:70%; top:60%">Nike Shoes<br><small>₹4,299</small></div>
-<div class="facility" data-type="washroom" style="left:90%; top:85%">Washroom</div>
-</div>
+    <section class="map-area">
+      <div class="map-top">
+        <div class="map-info">
+          <div id="liveLocation">Live: Ground (x:10,y:50)</div>
+          <div id="destinationInfo">Destination: —</div>
+        </div>
+        <div class="map-actions">
+          <button id="multiSelectBtn">Multi-select</button>
+          <button id="showFacilities">Facilities</button>
+        </div>
+      </div>
 
+      <div id="mallMap" class="mall-map">
+        <div class="floor floor-ground" data-floor="ground">
+          <div class="node" data-id="Apples" style="left:10%; top:70%">Apples<br><small>₹120/kg</small></div>
+          <div class="node" data-id="Oranges" style="left:20%; top:60%">Oranges<br><small>₹90/kg</small></div>
+          <div class="facility" data-type="washroom" style="left:5%; top:10%">Washroom</div>
+          <div class="facility" data-type="office" style="left:90%; top:5%">Mall Office</div>
+        </div>
 
-<div class="floor floor-second hidden" data-floor="second">
-<div class="node" data-id="TV" style="left:30%; top:30%">Samsung TV<br><small>₹45,999</small></div>
-<div class="node" data-id="Fridge" style="left:80%; top:50%">LG Fridge<br><small>₹32,499</small></div>
-<div class="facility" data-type="washroom" style="left:60%; top:10%">Washroom</div>
-</div>
+        <div class="floor floor-first hidden" data-floor="first">
+          <div class="node" data-id="Jeans" style="left:50%; top:40%">Levi's Jeans<br><small>₹2,499</small></div>
+          <div class="node" data-id="Shoes" style="left:70%; top:60%">Nike Shoes<br><small>₹4,299</small></div>
+          <div class="facility" data-type="washroom" style="left:90%; top:85%">Washroom</div>
+        </div>
 
+        <div class="floor floor-second hidden" data-floor="second">
+          <div class="node" data-id="TV" style="left:30%; top:30%">Samsung TV<br><small>₹45,999</small></div>
+          <div class="node" data-id="Fridge" style="left:80%; top:50%">LG Fridge<br><small>₹32,499</small></div>
+          <div class="facility" data-type="washroom" style="left:60%; top:10%">Washroom</div>
+        </div>
 
-<!-- shopper / live location marker + path -->
-<div id="shopper" class="shopper" style="left:8%; top:72%"></div>
-<svg id="pathSvg" class="path-svg"><polyline id="pathLine" points="" fill="none" stroke="#7b1fa2" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" /></svg>
-</div>
+        <div id="shopper" class="shopper" style="left:8%; top:72%"></div>
+        <svg id="pathSvg" class="path-svg"><polyline id="pathLine" points="" fill="none" stroke="#7b1fa2" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" /></svg>
+      </div>
 
+      <div class="modal" id="infoModal">
+        <div class="modal-content">
+          <h2 id="modalTitle">Info</h2>
+          <p id="modalText"></p>
+          <div class="modal-actions">
+            <button id="modalClose">Close</button>
+          </div>
+        </div>
+      </div>
 
-<div class="modal" id="infoModal">
-<div class="modal-content">
-<h2 id="modalTitle">Info</h2>
-<p id="modalText"></p>
-<div class="modal-actions">
-<button id="modalClose">Close</button>
-</div>
-</div>
-</div>
+    </section>
+  </main>
 
+  <footer>© 2025 Smart Mall Navigator | Voice + Route + Multi-Floor Navigation</footer>
 
-</section>
-</main>
-
-
-<footer>© 2025 Smart Mall Navigator | Voice + Route + Multi-Floor Navigation</footer>
-
-
-<script src="script.js"></script>
+  <script src="script.js" defer></script>
 </body>
 </html>
